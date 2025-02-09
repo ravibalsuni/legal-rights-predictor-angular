@@ -1,0 +1,20 @@
+<div class="header">
+<div class="main-text">
+    <h1>Sign In</h1>
+    <br><br>
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" #usernameRef>
+      </div>
+      <br><br>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" #passwordRef>
+      </div>
+      <br><br>
+      <button class="button" type="submit" (click)="login(usernameRef.value, passwordRef.value)"><i class="fas fa-sign-in-alt"></i> Login</button>
+    </form>
+  </div>
+  </div>
+  
