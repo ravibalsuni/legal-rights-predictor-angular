@@ -16,6 +16,39 @@
     flex-direction: column;
   }
 
+  /* Main text label */
+.main-text .label {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 45px;
+    margin: 10px;
+    color: #fff;
+    border: 3px solid #b8860b;
+    background-color: #b8860b;
+    transition: background-color 1s, color 1s;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.main-text label, .main-text input {
+    font-size: 1.5rem;
+  }
+
+  .main-text label {
+    background-color: #b8860b; 
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    }
+
+    textarea {
+        height: 110px; /* Set the height */
+        width: 80%; /* Set the width to full */
+      }
+
 /* Navigation styling */
 nav {
     display: flex;

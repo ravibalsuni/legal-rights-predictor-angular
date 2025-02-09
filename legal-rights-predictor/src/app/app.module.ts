@@ -8,12 +8,15 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { LoginComponent } from './login/login.component';
 import { DocumentsComponent } from './documents/documents.component';
+import { FeedbackComponent } from './feedback/feedback.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'documents', component: DocumentsComponent }
+  { path: 'documents', component: DocumentsComponent },
+  { path: 'feedback', component: FeedbackComponent }
 ];
 
 @NgModule({
@@ -21,13 +24,15 @@ const routes: Routes = [
     AppComponent,
     WelcomeComponent,
     LoginComponent,
-    DocumentsComponent
+    DocumentsComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes),
     CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -13,6 +13,10 @@ export class WelcomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  showAlert(): void {
+    alert('This is the future scope of the project');
+  }
+
   isLoggedIn(): boolean {
     return sessionStorage.getItem('username') != null && sessionStorage.getItem('password') != null;
   }
