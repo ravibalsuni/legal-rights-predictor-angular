@@ -10,13 +10,15 @@ import { LoginComponent } from './login/login.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HelpComponent } from './help/help.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
   { path: 'welcome', component: WelcomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'documents', component: DocumentsComponent },
-  { path: 'feedback', component: FeedbackComponent }
+  { path: 'feedback', component: FeedbackComponent },
+  { path: 'help', component: HelpComponent }
 ];
 
 @NgModule({
@@ -25,7 +27,8 @@ const routes: Routes = [
     WelcomeComponent,
     LoginComponent,
     DocumentsComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,
