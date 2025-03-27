@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
-  selector: 'app-victim-chatbot',
-  templateUrl: './victim-chatbot.component.html',
-  styleUrls: ['./victim-chatbot.component.css']
+  selector: 'app-victim-translation',
+  templateUrl: './victim-translation.component.html',
+  styleUrls: ['./victim-translation.component.css']
 })
-export class VictimChatbotComponent implements OnInit {
+export class VictimTranslationComponent implements OnInit {
 
   @ViewChild('messageContainer') messageContainer?: ElementRef;
   
@@ -93,4 +93,3 @@ export class VictimChatbotComponent implements OnInit {
     }
     
   }
-
