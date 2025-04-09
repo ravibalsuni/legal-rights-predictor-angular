@@ -2,6 +2,8 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { API_URL, PREDICT_ENDPOINT } from 'src/app/constants';
 
 @Component({
   selector: 'app-victim-chatbot',
@@ -13,9 +15,9 @@ export class VictimChatbotComponent implements OnInit {
   @ViewChild('messageContainer') messageContainer?: ElementRef;
   
   userInput: string = '';
-  messages: { text: string, isUser: boolean }[] = [];
+  messages: { text: any, isUser: boolean }[] = [];
 
-  constructor(private http: HttpClient, private router: Router,private cdr: ChangeDetectorRef) { }
+  constructor(private http: HttpClient, private router: Router,private cdr: ChangeDetectorRef, private sanitizer: DomSanitizer ) { }
 
   ngAfterViewInit() {
     this.scrollToBottom();
@@ -38,11 +40,36 @@ export class VictimChatbotComponent implements OnInit {
   sendMessage() {
     if (this.userInput.trim()) {
       this.messages.push({ text: this.userInput, isUser: true });
-      // Here you will call the backend API to get the response
-      this.messages.push({ text: 'This is a dummy response from the bot.', isUser: false });
-      this.userInput = '';
+     // Call the backend API to get the response
+    this.http.post(`${API_URL}${PREDICT_ENDPOINT}`, { query: this.userInput })
+    .subscribe((res: any) => {
+      let response = res.response;
+      response = response.replace(/<[^>]*>/g, '');
+      let answers = response.split('Possible Answer');
+      let formattedAnswers = '';
+      for (let i = 1; i < answers.length; i++) {
+        let answer = answers[i].trim();
+        answer = answer.replace(/According to BNS Section/g, '<br><b>According to BNS Section</b>');
+        answer = answer.replace(/Title:/g, '<br><b>Title:</b>');
+        answer = answer.replace(/Description:/g, '<br><b>Description:</b>');
+        answer = answer.replace(/Punishment:/g, '<br><b>Punishment:</b>');
+        formattedAnswers += '<br><br><b>Possible Answer </b>' + answer;
+      }
+      this.messages.push({
+        text: this.sanitizer.bypassSecurityTrustHtml(formattedAnswers),
+        isUser: false
+      });
       this.cdr.detectChanges();
       this.scrollToBottom();
+    }, (error) => {
+      console.error(error);
+      this.messages.push({ text: 'Error: Unable to get response from the bot.', isUser: false });
+      this.cdr.detectChanges();
+      this.scrollToBottom();
+    });
+  
+  this.userInput = '';
+
     }
   }
 
