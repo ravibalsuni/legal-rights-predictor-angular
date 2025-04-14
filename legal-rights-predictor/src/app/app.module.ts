@@ -13,6 +13,7 @@ import { FeedbackComponent } from './feedback/feedback.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HelpComponent } from './help/help.component';
 import { VictimChatbotComponent } from './victim-chatbot/victim-chatbot.component';
+import { VictimTranslationComponent } from './victim-translation/victim-translation.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -21,7 +22,8 @@ const routes: Routes = [
   { path: 'documents', component: DocumentsComponent },
   { path: 'feedback', component: FeedbackComponent },
   { path: 'help', component: HelpComponent },
-  { path: 'victim-chatbot', component: VictimChatbotComponent }
+  { path: 'victim-chatbot', component: VictimChatbotComponent },
+  { path: 'victim-translation', component: VictimTranslationComponent }
 ];
 
 @NgModule({
@@ -32,7 +34,8 @@ const routes: Routes = [
     DocumentsComponent,
     FeedbackComponent,
     HelpComponent,
-    VictimChatbotComponent
+    VictimChatbotComponent,
+    VictimTranslationComponent
   ],
   imports: [
     BrowserModule,

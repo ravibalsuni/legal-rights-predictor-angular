@@ -3,21 +3,21 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { API_URL, PREDICT_ENDPOINT } from 'src/app/constants';
+import { API_URL, PREDICT_MARATHI_ENDPOINT, TRANSLATE_MARATHI_ENDPOINT } from 'src/app/constants';
 
 @Component({
-  selector: 'app-victim-chatbot',
-  templateUrl: './victim-chatbot.component.html',
-  styleUrls: ['./victim-chatbot.component.css']
+  selector: 'app-victim-translation',
+  templateUrl: './victim-translation.component.html',
+  styleUrls: ['./victim-translation.component.css']
 })
-export class VictimChatbotComponent implements OnInit {
+export class VictimTranslationComponent implements OnInit {
 
   @ViewChild('messageContainer') messageContainer?: ElementRef;
   
   userInput: string = '';
   messages: { text: any, isUser: boolean }[] = [];
 
-  constructor(private http: HttpClient, private router: Router,private cdr: ChangeDetectorRef, private sanitizer: DomSanitizer ) { }
+  constructor(private http: HttpClient, private router: Router,private cdr: ChangeDetectorRef, private sanitizer: DomSanitizer) { }
 
   ngAfterViewInit() {
     this.scrollToBottom();
@@ -38,44 +38,56 @@ export class VictimChatbotComponent implements OnInit {
   }
 
   sendMessage() {
-    if (this.userInput.trim()) {
-      this.messages.push({ text: this.userInput, isUser: true });
-     // Call the backend API to get the response
-    this.http.post(`${API_URL}${PREDICT_ENDPOINT}`, { query: this.userInput })
-    .subscribe((res: any) => {
-      let response = res.response;
-      response = response.replace(/<[^>]*>/g, '');
-      let answers = response.split('Possible Answer');
-      let formattedAnswers = '';
-      if (answers.length > 1) {
-        for (let i = 1; i < answers.length; i++) {
-          let answer = answers[i].trim();
-          answer = answer.replace(/According to BNS Section/g, '<br><b>According to BNS Section</b>');
-          answer = answer.replace(/Title:/g, '<br><b>Title:</b>');
-          answer = answer.replace(/Description:/g, '<br><b>Description:</b>');
-          answer = answer.replace(/Punishment:/g, '<br><b>Punishment:</b>');
-          formattedAnswers += '<br><br><b>Possible Answer </b>' + answer;
+      if (this.userInput.trim()) {
+        this.messages.push({ text: this.userInput, isUser: true });
+       // Call the backend API to get the response
+      this.http.post(`${API_URL}${PREDICT_MARATHI_ENDPOINT}`, { query: this.userInput })
+      .subscribe((res: any) => {
+        let response = res.response;
+        response = response.replace(/<[^>]*>/g, '');
+        let answers = response.split('Possible Answer');
+        let formattedAnswers = '';
+        let response_mr='';
+        if (answers.length > 1) {
+          for (let i = 1; i < answers.length; i++) {
+            let answer = answers[i].trim();
+            answer = answer.replace(/According to BNS Section/g, '<br><b>According to BNS Section</b>');
+            answer = answer.replace(/Title:/g, '<br><b>Title:</b>');
+            answer = answer.replace(/Description:/g, '<br><b>Description:</b>');
+            answer = answer.replace(/Punishment:/g, '<br><b>Punishment:</b>');
+            formattedAnswers += '<br><br><b>Possible Answer </b>' + answer;
+          }
+        }else{
+          formattedAnswers=response;
+          this.messages.push({ text: formattedAnswers, isUser: false });
+          return;
         }
-      }else{
-        formattedAnswers=response;
-      }
-      this.messages.push({
-        text: this.sanitizer.bypassSecurityTrustHtml(formattedAnswers),
-        isUser: false
-      });
-      this.cdr.detectChanges();
-      this.scrollToBottom();
-    }, (error) => {
-      console.error(error);
-      this.messages.push({ text: 'Error: Unable to get response from the bot.', isUser: false });
-      this.cdr.detectChanges();
-      this.scrollToBottom();
-    });
-  
-  this.userInput = '';
 
+         // Call the backend API to get the mr response
+         this.http.post(`${API_URL}${TRANSLATE_MARATHI_ENDPOINT}`, { query: formattedAnswers })
+         .subscribe((res: any) => {
+          response_mr = res.response;
+          this.messages.push({ text: this.sanitizer.bypassSecurityTrustHtml(response_mr), isUser: false });
+          this.cdr.detectChanges();
+          this.scrollToBottom();
+         }, (error) => {
+          console.error(error);
+          this.messages.push({ text: 'Error: Unable to get response from the bot.', isUser: false });
+          this.cdr.detectChanges();
+          this.scrollToBottom();
+        });
+
+      }, (error) => {
+        console.error(error);
+        this.messages.push({ text: 'Error: Unable to get response from the bot.', isUser: false });
+        this.cdr.detectChanges();
+        this.scrollToBottom();
+      });
+    
+    this.userInput = '';
+  
+      }
     }
-  }
 
   saveMessages() {
     // Here you will call the backend API to send the request
@@ -124,4 +136,3 @@ export class VictimChatbotComponent implements OnInit {
     }
     
   }
-
