@@ -13,10 +13,11 @@
         <div class="chat-container">
             <div class="message-container" #messageContainer>
                 <div *ngFor="let message of messages">
-                  <p class="message-text" [ngClass]="{'user-msg': message.isUser, 'bot-msg': !message.isUser}">
-                    {{ message.isUser ? 'User' : 'Bot' }}: {{ message.text }}
+                  <div class="message-text" [ngClass]="{'user-msg': message.isUser, 'bot-msg': !message.isUser}">
+                    {{ message.isUser ? 'User Query' : 'Bot Response' }}:  
+                    <div [innerHTML]="message.text" style="text-align: left;"></div>
                     <button class="copy-btn" (click)="copyMessage(message.text)"><i class="fas fa-sign-in-alt"></i>Copy</button>
-                  </p>
+                  </div>
                 </div>
                 <button type="submit" class="copy-all-btn" *ngIf="messages.length > 0"  (click)="copyAllMessages()"><i class="fas fa-sign-in-alt"></i>Copy All</button>
                 <button type="submit" class="save-btn" *ngIf="messages.length > 0" (click)="saveMessages()"><i class="fas fa-save"></i>Save All</button>

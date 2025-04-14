@@ -47,13 +47,17 @@ export class VictimChatbotComponent implements OnInit {
       response = response.replace(/<[^>]*>/g, '');
       let answers = response.split('Possible Answer');
       let formattedAnswers = '';
-      for (let i = 1; i < answers.length; i++) {
-        let answer = answers[i].trim();
-        answer = answer.replace(/According to BNS Section/g, '<br><b>According to BNS Section</b>');
-        answer = answer.replace(/Title:/g, '<br><b>Title:</b>');
-        answer = answer.replace(/Description:/g, '<br><b>Description:</b>');
-        answer = answer.replace(/Punishment:/g, '<br><b>Punishment:</b>');
-        formattedAnswers += '<br><br><b>Possible Answer </b>' + answer;
+      if (answers.length > 1) {
+        for (let i = 1; i < answers.length; i++) {
+          let answer = answers[i].trim();
+          answer = answer.replace(/According to BNS Section/g, '<br><b>According to BNS Section</b>');
+          answer = answer.replace(/Title:/g, '<br><b>Title:</b>');
+          answer = answer.replace(/Description:/g, '<br><b>Description:</b>');
+          answer = answer.replace(/Punishment:/g, '<br><b>Punishment:</b>');
+          formattedAnswers += '<br><br><b>Possible Answer </b>' + answer;
+        }
+      }else{
+        formattedAnswers=response;
       }
       this.messages.push({
         text: this.sanitizer.bypassSecurityTrustHtml(formattedAnswers),
