@@ -1,0 +1,33 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <div class="header">
+    <nav>
+        <ul>
+          <li><a (click)="navigateToWelcome()" class="nav-button">Home</a></li>
+          <li><a (click)="logout()" class="nav-button">Log Out</a></li>
+        </ul>
+      </nav>
+  <div class="main-text">
+        <h1>Accused Translation Chatbot</h1>
+        <div class="chat-container">
+            <div class="message-container" #messageContainer>
+                <div *ngFor="let message of messages">
+                  <div class="message-text" [ngClass]="{'user-msg': message.isUser, 'bot-msg': !message.isUser}">
+                    {{ message.isUser ? 'User Query' : 'Bot Response' }}:  
+                    <div [innerHTML]="message.text" style="text-align: left;"></div>
+                    <button class="copy-btn" (click)="copyMessage(message.text)"><i class="fas fa-sign-in-alt"></i>Copy</button>
+                  </div>
+                </div>
+                <button type="submit" class="copy-all-btn" *ngIf="messages.length > 0"  (click)="copyAllMessages()"><i class="fas fa-sign-in-alt"></i>Copy All</button>
+                <button type="submit" class="save-btn" *ngIf="messages.length > 0" (click)="saveMessages()"><i class="fas fa-save"></i>Save All</button>
+            </div>
+            <br>
+            <div class="input-box">
+              <textarea [(ngModel)]="userInput" placeholder="Enter your query..." (keyup.enter)="sendMessage()" > </textarea>
+              <br><br>
+              <button class="button" (click)="sendMessage()"><i class="fas fa-sign-in-alt"></i>Send</button>
+            </div>
+          </div>
+  </div>
+  </div>

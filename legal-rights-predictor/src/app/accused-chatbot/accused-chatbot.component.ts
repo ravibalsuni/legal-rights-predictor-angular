@@ -107,7 +107,7 @@ export class AccusedChatbotComponent implements OnInit {
     }  
 
     navigateToAccusedTranslation(): void {
-      this.router.navigate(['/victim-translation'], { replaceUrl: true });
+      this.router.navigate(['/accused-translation'], { replaceUrl: true });
     }  
   
     logout(): void {
