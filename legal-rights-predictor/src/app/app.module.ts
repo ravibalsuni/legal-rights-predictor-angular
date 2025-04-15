@@ -14,6 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HelpComponent } from './help/help.component';
 import { VictimChatbotComponent } from './victim-chatbot/victim-chatbot.component';
 import { VictimTranslationComponent } from './victim-translation/victim-translation.component';
+import { AccusedChatbotComponent } from './accused-chatbot/accused-chatbot.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -23,7 +24,8 @@ const routes: Routes = [
   { path: 'feedback', component: FeedbackComponent },
   { path: 'help', component: HelpComponent },
   { path: 'victim-chatbot', component: VictimChatbotComponent },
-  { path: 'victim-translation', component: VictimTranslationComponent }
+  { path: 'victim-translation', component: VictimTranslationComponent },
+  { path: 'accused-chatbot', component: AccusedChatbotComponent }
 ];
 
 @NgModule({
@@ -35,7 +37,8 @@ const routes: Routes = [
     FeedbackComponent,
     HelpComponent,
     VictimChatbotComponent,
-    VictimTranslationComponent
+    VictimTranslationComponent,
+    AccusedChatbotComponent
   ],
   imports: [
     BrowserModule,
