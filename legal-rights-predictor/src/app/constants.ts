@@ -5,3 +5,4 @@ export const TRANSLATE_MARATHI_ENDPOINT = '/legalrightpredictor/translate-marath
 export const ACCUSED_PREDICT_ENDPOINT = '/legalrightpredictor/accused-predict';
 export const ACCUSED_PREDICT_MARATHI_ENDPOINT = '/legalrightpredictor/accused-predict-marathi';
 export const ACCUSED_TRANSLATE_MARATHI_ENDPOINT = '/legalrightpredictor/accused-translate-marathi';
+export const SAVE_CHAT_ENDPOINT = '/legalrightpredictor/save-chat';
