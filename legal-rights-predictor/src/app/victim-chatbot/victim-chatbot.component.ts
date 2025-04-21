@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { API_URL, PREDICT_ENDPOINT } from 'src/app/constants';
+import { API_URL, PREDICT_ENDPOINT, SAVE_CHAT_ENDPOINT } from 'src/app/constants';
 
 @Component({
   selector: 'app-victim-chatbot',
@@ -78,9 +78,23 @@ export class VictimChatbotComponent implements OnInit {
   }
 
   saveMessages() {
-    // Here you will call the backend API to send the request
-   alert('save api triggered');
-  }
+     const allMessages = this.messages.map(message => `${message.isUser ? 'User' : 'Bot'}: ${message.text}`).join('\n').replace(/^\s*\n/gm, '');
+     fetch(`${API_URL}${SAVE_CHAT_ENDPOINT}`, {
+       method: 'POST',
+       headers: {
+         'Content-Type': 'application/json'
+       },
+       body: JSON.stringify({ messages: allMessages })
+     })
+     .then(response => response.json())
+     .then(data => {
+       console.log('Messages saved successfully:', data);
+       alert('Messages saved successfully');
+     })
+     .catch(error => {
+       console.error('Error saving messages:', error);
+     });
+   }
 
   copyMessage(text: string) {
     navigator.clipboard.writeText(text).then(() => {
