@@ -240,6 +240,38 @@ def accusedchatbotMarathi(query):
         return "Sorry, I couldn't find relevant information."
         
         
+def chatbotHindi(query):
+    try:
+        # Check if the query is only in Marathi language
+        lang = detect(query)
+        if lang != 'hi':
+            return "कृपया प्रश्न केवल हिन्दी में ही पूछें।"
+
+        # Translate the query to English
+        translator = GoogleTranslator(source='hi', target='en')
+        query_en = translator.translate(query)
+        print('---')
+        print(query_en)
+        print('---')
+        df1 = load_datasets()
+        relevant_sections = find_relevant_sections(query_en, df1)
+    except FileNotFoundError as e:
+        return str(e)
+    if relevant_sections:
+        response = ""
+        for idx, section in enumerate(relevant_sections, 1):
+            response += f"<b>Possible Answer {idx}:</b><br>"
+            response += f"According to BNS Section {section['BNS Section No']}<br><br>"
+            response += f"<b>Title:</b> {section['Title']}<br><br>"
+            response += f"<b>Description:</b> {section['Description']}<br><br>"
+            response += f"<b>Punishment:</b> {section['Punishment']}<br><br>"  
+        print('length - ')
+        print(len(response))
+        return response
+    else:
+        return "Sorry, I couldn't find relevant information."
+        
+        
 
 def accusedchatbotHindi(query):
     try:
@@ -286,6 +318,13 @@ def predictMarathi():
     response = chatbotMarathi(query)
     return jsonify({'response': response})
     
+
+@app.route('/legalrightpredictor/predict-hindi', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def predictHindi():
+    query = request.get_json()['query']
+    response = chatbotHindi(query)
+    return jsonify({'response': response})
+    
 @app.route('/legalrightpredictor/translate-marathi', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def translateMarathi():
     response = request.get_json()['query']
@@ -308,6 +347,33 @@ def translateMarathi():
     print(len(response_mr))
     print('---')
     return jsonify({'response': response_mr})
+    
+    
+
+@app.route('/legalrightpredictor/translate-hindi', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def translateHindi():
+    response = request.get_json()['query']
+    print('input')
+    print(response)
+    print('length translate - ')
+    print(len(response))
+    translator = GoogleTranslator(source='auto', target='hi')
+    # Split the response into possible answers
+    possible_answers = re.split(r'<b>Possible Answer </b>', response)[1:]
+    # Fetch only the first 3 possible answers
+    first_two_answers = possible_answers[:2]
+    # Join the first three answers back into a string
+    first_two_answers_str = '<b>Possible Answer </b>'.join([''] + first_two_answers)
+    #print('first_two_answers_str')
+    #print(first_two_answers_str)
+    response_hi = translator.translate(first_two_answers_str)
+    print('---')
+    print(response_hi)
+    print(len(response_hi))
+    print('---')
+    return jsonify({'response': response_hi})
+
+
     
 @app.route('/legalrightpredictor/accused-predict', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def accusedpredict():
