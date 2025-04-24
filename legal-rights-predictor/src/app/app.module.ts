@@ -16,6 +16,8 @@ import { VictimChatbotComponent } from './victim-chatbot/victim-chatbot.componen
 import { VictimTranslationComponent } from './victim-translation/victim-translation.component';
 import { AccusedChatbotComponent } from './accused-chatbot/accused-chatbot.component';
 import { AccusedTranslationComponent } from './accused-translation/accused-translation.component';
+import { SignupComponent } from './signup/signup.component';
+import { ForgotPwdComponent } from './forgot-pwd/forgot-pwd.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -27,7 +29,9 @@ const routes: Routes = [
   { path: 'victim-chatbot', component: VictimChatbotComponent },
   { path: 'victim-translation', component: VictimTranslationComponent },
   { path: 'accused-chatbot', component: AccusedChatbotComponent },
-  { path: 'accused-translation', component: AccusedTranslationComponent }
+  { path: 'accused-translation', component: AccusedTranslationComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'forgot-password', component: ForgotPwdComponent },
 ];
 
 @NgModule({
@@ -41,7 +45,9 @@ const routes: Routes = [
     VictimChatbotComponent,
     VictimTranslationComponent,
     AccusedChatbotComponent,
-    AccusedTranslationComponent
+    AccusedTranslationComponent,
+    SignupComponent,
+    ForgotPwdComponent
   ],
   imports: [
     BrowserModule,

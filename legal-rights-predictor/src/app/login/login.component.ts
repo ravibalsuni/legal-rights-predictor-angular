@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,private http: HttpClient) { }
 
   ngOnInit(): void {
     const username = sessionStorage.getItem('username');
@@ -20,19 +21,27 @@ export class LoginComponent implements OnInit {
     if (sessionStorage.getItem('username') != null && sessionStorage.getItem('password') != null) {
       alert('Already logged in, going to home page.');
       this.router.navigate(['/welcome']);
-    } 
-  
-    if (username === 'demo' && password === 'demo') {
-      sessionStorage.setItem('username', username);
-      sessionStorage.setItem('password', password);
-      this.router.navigate(['/welcome']);
-    } else {
-      alert('Invalid username or password');
+    } else{
+      const userData = {
+        username: username,
+        password: password
+      };
+      this.http.post('http://localhost:8081/login', userData)
+      .subscribe(response => {
+        console.log(response);
+        sessionStorage.setItem('username', username);
+        sessionStorage.setItem('password', password);
+        this.router.navigate(['/welcome']);
+      }, error => {
+        console.error(error);
+        alert('Invalid email or password');
+      });
+      
     }
   }
 
-  onSubmit(): void {
-    
+  navigateToWelcome(){
+    this.router.navigate(['/welcome'], { replaceUrl: true });
   }
 
 }

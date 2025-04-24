@@ -1,0 +1,135 @@
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+/* Header background and styling */
+.header {
+    height: 100vh;
+    width: 100%;
+    background: url("/assets/law.png") no-repeat center center;
+    background-size: cover;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+
+/* Navigation styling */
+nav {
+    display: flex;
+    padding: 20px 100px;
+    align-items: center;
+}
+
+/* Flex alignment to move navigation items to the right */
+nav ul {
+    display: flex;
+    justify-content: flex-end;
+    list-style: none;
+    flex: 1;
+}
+
+/* Styling navigation links as button-like divs */
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a.nav-button {
+    display: inline-block;
+    padding: 8px 16px;
+    color: #fff;
+    border: 2px solid #fff;
+    background-color: transparent;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none; /* Remove underline */
+}
+
+nav ul li a.nav-button:hover {
+    background-color: #fff;
+    color: blue;
+}
+
+/* Main text center alignment */
+.main-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Heading style for 'Legal Rights Predictor' */
+.main-text h1 {
+    font-size: 60px;       /* Set font size to 60px */
+    font-weight: bold;     /* Bold text */
+    color: #fff;           /* White color */
+    text-decoration: none; /* Remove underline */
+}
+
+/* Main text buttons */
+.main-text .button {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 45px;
+    margin: 10px;
+    color: #fff;
+    border: 3px solid #b8860b;
+    background-color: #b8860b;
+    transition: background-color 1s, color 1s;
+    font-size: 22px;
+    font-weight: bold;
+    margin: auto;
+    display: block;
+}
+
+/* Main text label */
+.main-text .label {
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 45px;
+    margin: 10px;
+    color: #fff;
+    border: 3px solid #b8860b;
+    background-color: #b8860b;
+    transition: background-color 1s, color 1s;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.main-text label, .main-text input {
+    font-size: 1.5rem;
+  }
+
+  .main-text label {
+    background-color: #b8860b; 
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    }
+
+    .main-text input[type="text"], .main-text input[type="password"] {
+        margin-top: 15px;
+      }
+
+
+.main-text .button:hover {
+    background-color: #fff;
+    color: blue;
+}
+
+/* Icon styling */
+.main-text .button i {
+    margin-right: 8px; /* Space between icon and text */
+}
