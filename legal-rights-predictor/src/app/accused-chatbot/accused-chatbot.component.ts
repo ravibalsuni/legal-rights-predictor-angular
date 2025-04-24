@@ -123,6 +123,10 @@ export class AccusedChatbotComponent implements OnInit {
     navigateToAccusedTranslation(): void {
       this.router.navigate(['/accused-translation'], { replaceUrl: true });
     }  
+
+    navigateToAccusedTranslationHindi(): void {
+      this.router.navigate(['/accused-translation-hindi'], { replaceUrl: true });
+    }  
   
     logout(): void {
       if (sessionStorage.getItem('username') === null && sessionStorage.getItem('password') === null) {

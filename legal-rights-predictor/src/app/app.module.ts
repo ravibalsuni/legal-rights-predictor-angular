@@ -18,6 +18,8 @@ import { AccusedChatbotComponent } from './accused-chatbot/accused-chatbot.compo
 import { AccusedTranslationComponent } from './accused-translation/accused-translation.component';
 import { SignupComponent } from './signup/signup.component';
 import { ForgotPwdComponent } from './forgot-pwd/forgot-pwd.component';
+import { AccusedTranslationHindiComponent } from './accused-translation-hindi/accused-translation-hindi.component';
+import { VictimTranslationHindiComponent } from './victim-translation-hindi/victim-translation-hindi.component';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -32,6 +34,8 @@ const routes: Routes = [
   { path: 'accused-translation', component: AccusedTranslationComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgot-password', component: ForgotPwdComponent },
+  { path: 'accused-translation-hindi', component: AccusedTranslationHindiComponent },
+  { path: 'victim-translation-hindi', component: VictimTranslationHindiComponent }
 ];
 
 @NgModule({
@@ -47,7 +51,9 @@ const routes: Routes = [
     AccusedChatbotComponent,
     AccusedTranslationComponent,
     SignupComponent,
-    ForgotPwdComponent
+    ForgotPwdComponent,
+    AccusedTranslationHindiComponent,
+    VictimTranslationHindiComponent
   ],
   imports: [
     BrowserModule,

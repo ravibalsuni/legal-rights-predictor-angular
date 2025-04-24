@@ -133,6 +133,10 @@ export class VictimTranslationComponent implements OnInit {
     navigateToVictimTranslation(): void {
       this.router.navigate(['/victim-translation'], { replaceUrl: true });
     }  
+
+    navigateToVictimTranslationHindi(): void {
+      this.router.navigate(['/victim-translation-hindi'], { replaceUrl: true });
+    }  
   
     logout(): void {
       if (sessionStorage.getItem('username') === null && sessionStorage.getItem('password') === null) {
