@@ -39,6 +39,65 @@ except OSError:
 
 bert_model = SentenceTransformer("all-MiniLM-L6-v2")
 
+
+def load_datasets_in_mysql():
+    """Check if the dataset exists and load it into MySQL database."""
+    dataset1_path = "C:/BNS 2K24 BY Dhiraj.xlsx"
+    
+    if not os.path.exists(dataset1_path):
+        raise FileNotFoundError(f"Dataset file not found at {dataset1_path}. Please check the file path or upload the file.")
+    
+    df1 = pd.read_excel(dataset1_path)
+    
+    # Replace NaN values with None
+    df1 = df1.where(pd.notnull(df1), None)
+    
+    
+    try:
+        # Establish a connection to the MySQL database
+        conn = mysql.connector.connect(**config)
+        cursor = conn.cursor()
+        
+        # Create a table if it doesn't exist
+        table_name = 'BNS_DATASET'
+        columns = []
+        long_text_columns = ['Explanation', 'Example']  # Add columns that need LONGTEXT data type
+        for col in df1.columns:
+            if col in long_text_columns:
+                columns.append(f"`{col}` LONGTEXT")
+            else:
+                columns.append(f"`{col}` VARCHAR(255)")
+        columns_str = ", ".join(columns)
+        cursor.execute(f"DROP TABLE IF EXISTS {table_name}")
+        cursor.execute(f"CREATE TABLE {table_name} ({columns_str})")
+        
+        # Insert data into the MySQL table
+        placeholders = ", ".join(['%s'] * len(df1.columns))
+        columns_str = ", ".join([f"`{col}`" for col in df1.columns])
+        for index, row in df1.iterrows():
+            cursor.execute(f"INSERT INTO {table_name} ({columns_str}) VALUES ({placeholders})", tuple(row))
+        
+        # Commit the transaction
+        conn.commit()
+        
+        print("Data loaded into MySQL database successfully.")
+        
+    except Error as e:
+        print(f"Error loading data into MySQL database: {e}")
+    
+    finally:
+        # Close the cursor and connection
+        if 'cursor' in locals():
+            cursor.close()
+        if 'conn' in locals():
+            conn.close()
+
+
+            
+
+load_datasets_in_mysql()
+
+
 def load_datasets():
     """Check if the dataset exists and load it."""
     dataset1_path = "C:/BNS 2K24 BY Dhiraj.xlsx"

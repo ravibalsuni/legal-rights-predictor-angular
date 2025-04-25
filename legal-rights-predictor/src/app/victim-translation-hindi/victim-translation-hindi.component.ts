@@ -136,7 +136,7 @@ export class VictimTranslationHindiComponent implements OnInit {
       }  
   
       navigateToVictimTranslationMarathi(): void {
-        this.router.navigate(['/victim-translation-marathi'], { replaceUrl: true });
+        this.router.navigate(['/victim-translation'], { replaceUrl: true });
       }  
     
       logout(): void {
