@@ -5,6 +5,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { API_URL, PREDICT_ENDPOINT, SAVE_CHAT_ENDPOINT } from 'src/app/constants';
 
+
 @Component({
   selector: 'app-victim-chatbot',
   templateUrl: './victim-chatbot.component.html',
@@ -13,7 +14,7 @@ import { API_URL, PREDICT_ENDPOINT, SAVE_CHAT_ENDPOINT } from 'src/app/constants
 export class VictimChatbotComponent implements OnInit {
 
   @ViewChild('messageContainer') messageContainer?: ElementRef;
-  
+  isLoading = false;
   userInput: string = '';
   messages: { text: any, isUser: boolean }[] = [];
 
@@ -41,6 +42,7 @@ export class VictimChatbotComponent implements OnInit {
     if (this.userInput.trim()) {
       this.messages.push({ text: this.userInput, isUser: true });
      // Call the backend API to get the response
+     this.isLoading = true;
     this.http.post(`${API_URL}${PREDICT_ENDPOINT}`, { query: this.userInput })
     .subscribe((res: any) => {
       let response = res.response;
@@ -63,11 +65,13 @@ export class VictimChatbotComponent implements OnInit {
         text: this.sanitizer.bypassSecurityTrustHtml(formattedAnswers),
         isUser: false
       });
+      this.isLoading = false; 
       this.cdr.detectChanges();
       this.scrollToBottom();
     }, (error) => {
       console.error(error);
       this.messages.push({ text: 'Error: Unable to get response from the bot.', isUser: false });
+      this.isLoading = false; 
       this.cdr.detectChanges();
       this.scrollToBottom();
     });
